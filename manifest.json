@@ -1,0 +1,26 @@
+{
+  "name": "Crypto Eye",
+  "description": "Keep and eye on your crypto",
+  "version": "0.1",
+  "manifest_version" : 2,
+  "browser_action": {
+      "default_popup": "gets.html",
+      "default_icon" : "ceye.png"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+4",
+        "mac": "MacCtrl+Shift+4"
+      },
+      "description": "Opens default view"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "permissions": [
+    "storage"
+  ]
+}
