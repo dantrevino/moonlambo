@@ -1,28 +1,123 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CryptEye Extension Options</title>
-  <link rel="stylesheet" href="select2.min.css">
+  <title>CryptEye Options</title>
   <style>
     body: { padding: 10px; }
   </style>
 </head>
 
 <body>
-  Currencies to watch:
-  <select id="currency">
-   <option value="BTC">Bitcoin</option>
-   <option value="BCH">Bitcoin Cash</option>
-   <option value="ETH">Ethereum</option>
-   <option value="LTC">Litecoin</option>
+  <label for="id_currency_multi">Currencies to watch:</label>
+  <select name="currency" id="id_currency_multi">
+    <option value='BTC'>Bitcoin</option>
+    <option value='ETH'>Ethereum</option>
+    <option value='LTC'>Litecoin</option>
+    <option value='BCH'>Bitcoin Cash</option>
+    <option value='ACT'>Achain</option>
+    <option value='ADA'>Cardano</option>
+    <option value='AEON'>Aeon</option>
+    <option value='ARK'>Ark</option>
+    <option value='BAY'>BitBay</option>
+    <option value='BCC'>BitConnect</option>
+    <option value='BCN'>Bytecoin</option>
+    <option value='BCO'>BridgeCoin</option>
+    <option value='BLOCK'>Blocknet</option>
+    <option value='BTCD'>BitcoinDark</option>
+    <option value='BTG'>Bitcoin Gold</option>
+    <option value='BTS'>BitShares</option>
+    <option value='BTX'>Bitcore</option>
+    <option value='BURST'>Burst</option>
+    <option value='CLOAK'>CloakCoin</option>
+    <option value='CNX'>Cryptonex</option>
+    <option value='CRW'>Crown</option>
+    <option value='DASH'>Dash</option>
+    <option value='DCR'>Decred</option>
+    <option value='DCT'>DECENT</option>
+    <option value='DGB'>DigiByte</option>
+    <option value='DIME'>Dimecoin</option>
+    <option value='DOGE'>Dogecoin</option>
+    <option value='ECA'>Electra</option>
+    <option value='ECC'>ECC</option>
+    <option value='EMC'>Emercoin</option>
+    <option value='EMC2'>Einsteinium</option>
+    <option value='ETC'>Ethereum Classic</option>
+    <option value='ETN'>Electroneum</option>
+    <option value='ETP'>Metaverse ETP</option>
+    <option value='FCT'>Factom</option>
+    <option value='FLASH'>Flash</option>
+    <option value='FTC'>Feathercoin</option>
+    <option value='GAME'>GameCredits</option>
+    <option value='GBYTE'>Byteball Bytes</option>
+    <option value='GRS'>Groestlcoin</option>
+    <option value='GXS'>GXShares</option>
+    <option value='HSR'>Hshare</option>
+    <option value='HTML'>HTMLCOIN</option>
+    <option value='IOC'>I/O Coin</option>
+    <option value='KCS'>KuCoin Shares</option>
+    <option value='KMD'>Komodo</option>
+    <option value='LBC'>LBRY Credits</option>
+    <option value='LKK'>Lykke</option>
+    <option value='LSK'>Lisk</option>
+    <option value='MIOTA'>IOTA</option>
+    <option value='MNX'>MinexCoin</option>
+    <option value='MONA'>MonaCoin</option>
+    <option value='MOON'>Mooncoin</option>
+    <option value='NAV'>NAV Coin</option>
+    <option value='NEBL'>Neblio</option>
+    <option value='NEO'>NEO</option>
+    <option value='NLG'>Gulden</option>
+    <option value='NMC'>Namecoin</option>
+    <option value='NXS'>Nexus</option>
+    <option value='NXT'>Nxt</option>
+    <option value='PAC'>PACcoin</option>
+    <option value='PART'>Particl</option>
+    <option value='PIVX'>PIVX</option>
+    <option value='PPC'>Peercoin</option>
+    <option value='PURA'>Pura</option>
+    <option value='QTUM'>Qtum</option>
+    <option value='RDD'>ReddCoin</option>
+    <option value='RISE'>Rise</option>
+    <option value='SC'>Siacoin</option>
+    <option value='SHIFT'>Shift</option>
+    <option value='SKY'>Skycoin</option>
+    <option value='SLS'>SaluS</option>
+    <option value='SMART'>SmartCash</option>
+    <option value='STEEM'>Steem</option>
+    <option value='STRAT'>Stratis</option>
+    <option value='SYS'>Syscoin</option>
+    <option value='THC'>HempCoin</option>
+    <option value='UBQ'>Ubiq</option>
+    <option value='VEN'>VeChain</option>
+    <option value='VIA'>Viacoin</option>
+    <option value='VOX'>Voxels</option>
+    <option value='VTC'>Vertcoin</option>
+    <option value='WAVES'>Waves</option>
+    <option value='XAS'>Asch</option>
+    <option value='XBY'>XTRABYTES</option>
+    <option value='XCP'>Counterparty</option>
+    <option value='XDN'>DigitalNote</option>
+    <option value='XEM'>NEM</option>
+    <option value='XLM'>Stellar</option>
+    <option value='XMR'>Monero</option>
+    <option value='XP'>Experience Po...</option>
+    <option value='XRB'>RaiBlocks</option>
+    <option value='XRP'>Ripple</option>
+    <option value='XSH'>SHIELD</option>
+    <option value='XSPEC'>Spectrecoin</option>
+    <option value='XVG'>Verge</option>
+    <option value='XZC'>ZCoin</option>
+    <option value='ZCL'>ZClassic</option>
+    <option value='ZEC'>Zcash</option>
+    <option value='ZEN'>ZenCash</option>
   </select>
 
-  <label>Currently watching: </label><label id="like"></label>
-
+  <p>
+    <label>Currently watching: </label><label id="like"></label>
+  </p>
+  <div id="watch-list"></div>
   <div id="status"></div>
   <button id="save">Save</button>
-
   <script src="options.js"></script>
-  <script src="select2.min.js"></script>
 </body>
 </html>
