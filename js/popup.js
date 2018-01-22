@@ -32,16 +32,16 @@ function do_chart () {
 }
 
 $(document).ready(function() {
-    $('#coin-select').select2({
+    $('#coinselect').select2({
       placeholder: 'Choose currencies to watch',
       allowClear: true,
       // data: coinsForSelector,
-      width: '85%',
+      width: '100%',
       multiple: true
     });
 });
 
-$('#coin-select').on("select2:select", function(e) {
+$('#coinselect').on("select2:open", function(e) {
   var data = e.params.data
   console.log(data)
 });
