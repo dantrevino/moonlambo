@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', do_chart);
 function do_chart () {
   var coinArray = []
   var coin
-  var tblHtml = '<table class="table is-striped is-bordered is-size-6"><tr><th>Currency</th><th>Price</th><th nowrap>24HR Chg</th></tr><tbody>'
+  var tblHtml = '<table class="table is-striped is-hoverable is-size-6 is-fullwidth"><thead><th>Currency</th><th>Price</th><th nowrap>24HR Chg</th></thead><tbody>'
   const PLUS = "class='has-text-success'>"
   const MINUS = "class='has-text-danger'>"
   chrome.storage.sync.get('currencies', function(items) {
     if (!chrome.runtime.error) {
-      const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + items.currencies
+      const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + items.currencies + '&extraParams=CryptoWatch'
 // const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=BTC,BTC,CLOAK,ETH,BTS,BCH,BURST'
       axios.get(url).then(function(res){
         for (coin in res.data.DISPLAY){
@@ -18,7 +18,7 @@ function do_chart () {
           var cssCls = chg >= 0 ? PLUS : MINUS
           tblHtml+="<tr>"
           tblHtml+="<td>" + coinArray[i]['USD']['FROMSYMBOL']+"</td>"
-          tblHtml+="<td style='white-space: nowrap'>" + coinArray[i]['USD']['PRICE']+"</td>"
+          tblHtml+="<td class='has-text-right' style='white-space: nowrap'>" + coinArray[i]['USD']['PRICE']+"</td>"
           tblHtml+="<td " + cssCls + coinArray[i]['USD']['CHANGEPCT24HOUR'] +"%</td>"
           tblHtml+="</tr>"
         }
@@ -30,3 +30,18 @@ function do_chart () {
      }
    });
 }
+
+$(document).ready(function() {
+    $('#coin-select').select2({
+      placeholder: 'Choose currencies to watch',
+      allowClear: true,
+      // data: coinsForSelector,
+      width: '85%',
+      multiple: true
+    });
+});
+
+$('#coin-select').on("select2:select", function(e) {
+  var data = e.params.data
+  console.log(data)
+});
