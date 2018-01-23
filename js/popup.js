@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', do_chart);
+document.addEventListener('DOMContentLoaded', do_chartMst);
 function do_chart () {
   var coinArray = []
   var coin
-  var tblHtml = '<table class="table is-striped is-hoverable is-size-6 is-fullwidth"><thead><th>Currency</th><th>Price</th><th nowrap>24HR Chg</th></thead><tbody>'
+  var tblHtml = '<table class="table is-striped is-hoverable is-size-6 is-fullwidth" id="coinwatch"><thead><th>Currency</th><th>Price</th><th nowrap>24HR Chg</th></thead><tbody>'
   const PLUS = "class='has-text-success'>"
   const MINUS = "class='has-text-danger'>"
   // comment out chrome apis, url, and ending )} to test as web page -- 3lines
@@ -23,7 +23,7 @@ function do_chart () {
           tblHtml+="<td " + cssCls + coinArray[i]['USD']['CHANGEPCT24HOUR'] +"%</td>"
           tblHtml+="</tr>"
         }
-        tblHtml+="</tbody></table>"
+        var tblClose = "</tbody id='tblClose'></table>"
         $('#spinner').hide()
         document.getElementById('charts').innerHTML += tblHtml
       }).catch(function(err){
@@ -41,14 +41,15 @@ function add_new(id) {
     }
     for( var i = 0; i< coinArray.length; i++ ){
       var chg = Number(coinArray[i]['USD']['CHANGEPCT24HOUR'])
-      var cssCls = chg >= 0 ? PLUS : MINUS
-      tblHtml+="<tr>"
-      tblHtml+="<td>" + coinArray[i]['USD']['FROMSYMBOL']+"</td>"
+      var symbol = coinArray[i]['USD']['FROMSYMBOL']
+      var cssClass = chg >= 0 ? PLUS : MINUS
+      tblHtml+="<tr " +"id='" + symbol + "' >"
+      tblHtml+="<td><i class='cc '" +symbol + ">" + symbol +"</i></td>"
       tblHtml+="<td class='has-text-right' style='white-space: nowrap'>" + coinArray[i]['USD']['PRICE']+"</td>"
       tblHtml+="<td " + cssCls + coinArray[i]['USD']['CHANGEPCT24HOUR'] +"%</td>"
       tblHtml+="</tr>"
     }
-    document.getElementById('charts').innerHTML += tblHtml
+    document.getElementById('coinwatch').innerHTML += tblHtml
   }).catch(function(err){
     console.log(err)
   });
@@ -169,11 +170,37 @@ $(document).ready(function() {
     });
 
     $(coinselect).change(function(e) {
-      var selections = ( JSON.stringify($(coinselect).select2('data')) );
+      // var selections = ( JSON.stringify$(coinselect).select2('data')) );
+      var selections = $(coinselect).select2('data')
       //console.log('Selected IDs: ' + ids);
-      console.log('Selected options: ' + $(coinselect).select2('data') );
-      //$('#selectedIDs').text(ids);
-      // $('#selectedText').text(selections);      console.log(e.params)
+      console.log(selections)
+      var i = (selections.length) - 1
+      console.log('Selected options: ' + selections[i]['id'] );
+      // only selected options are sent
+      // if dynamically populating table, need to validate full
+      // list each time
+      // do not remove if removed from selected. leave that option
+      // to remove from table directly
+      // therefore only add if there is a new coin added to the end
+      // of the list
+
+      // get coin (ids) from select2
+      // add new coin?
+          // if coin id already exists in table, then ignore
+          // else
+          // 1. query for price
+          // 2. add to table
+      // remove coin?
+          // remove coin from table
+            // query coin ids in table
+            // use convention to identify
+            // this should only happen if selection is open
+            // provide delete button in table
+
+      var IDs = [];
+      $("#coinwatch").find(selections[i]['id']).each(function(){ IDs.push(this.id); });
+
+
     });
 });
 
@@ -188,3 +215,23 @@ function formatCoin (coin) {
   console.log(coin)
   return $coin;
 };
+
+function loadTable () {
+  var template = $('#charts').html()
+
+  Mustache.parse(template)
+  // build mstCoinList
+  // var rendered = Mustache.render(template, mstCoinList)
+
+  // testing object mstCoinList
+  var rendered = Mustache.render(template, {mstCoinList: [
+    {"symbol": "BTC","price": "$10,000","cssClass": "has-text-success","changePct": "3.2"},
+    {"symbol": "ETH","price": "$1,000","cssClass": "has-text-success","changePct": "3.2"}
+  ]})
+  $('#spinner').hide()
+  $('#target').html(rendered)
+}
+
+function do_chartMst() {
+  loadTable()
+}

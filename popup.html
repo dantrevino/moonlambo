@@ -3,6 +3,7 @@
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/select2.full.min.js"></script>
   <script src="js/axios.min.js"></script>
+  <script src="js/mustache.min.js"></script>
   <script src="js/popup.js"></script>
   <link rel="stylesheet" href="css/riotai-lite.css">
   <link rel="stylesheet" href="css/select2.min.css">
@@ -26,10 +27,26 @@
         <div class="bounce2"></div>
         <div class="bounce3"></div>
       </div>
+      <div id="target"></div>
     </section>
-    <div class="box" style="margin-top:8px;">
-      <div id="charts"></div>
-    </div>
+      <script id="charts" type="x-tmpl-mustache">
+      <div class="box" style="margin-top:8px;">
+        <table class="table is-striped is-hoverable is-size-6 is-fullwidth" id="coinwatch">
+        <thead>
+        <th>Currency</th><th>Price</th><th nowrap>24HR Chg</th>
+        </thead>
+        <tbody>
+        {{#mstCoinList}}
+        <tr id="{{symbol}}">
+          <td><i class="cc {{symbol}}"></i>{{symbol}}</td>
+          <td class="has-text-right" style="white-space: nowrap">{{price}}</td>
+          <td class={{cssClass}}>{{changePct}}%</td>
+        </tr>
+        {{/mstCoinList}}
+        </tbody>
+        </table>
+        </div>
+      </script>
   </div>
   <div class="is-size-7">
     <a href="https://riot.ai/">riot.ai</a>
