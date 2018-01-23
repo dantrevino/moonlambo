@@ -37,7 +37,7 @@ function add_new(id) {
   const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + id + '&extraParams=CryptoWatch'
   axios.get(url).then(function(res){
     for (coin in res.data.DISPLAY){
-      coinArray.push(res.data.DISPLAY[coin])
+      coinArray.unshift(res.data.DISPLAY[coin])
     }
     for( var i = 0; i< coinArray.length; i++ ){
       var chg = Number(coinArray[i]['USD']['CHANGEPCT24HOUR'])
@@ -164,14 +164,27 @@ $(document).ready(function() {
       {id:'XZC', text:'ZCoin'},
       {id:'ZEN', text:'ZenCash'}],
       width: '100%',
-      multiple: true
+      multiple: true,
+      // templateSelection: formatCoin
     });
 
     $(coinselect).change(function(e) {
       var selections = ( JSON.stringify($(coinselect).select2('data')) );
       //console.log('Selected IDs: ' + ids);
-      console.log('Selected options: ' + selections);
+      console.log('Selected options: ' + $(coinselect).select2('data') );
       //$('#selectedIDs').text(ids);
       // $('#selectedText').text(selections);      console.log(e.params)
     });
 });
+
+function formatCoin (coin) {
+  if (!coin.id) {
+    return coin.text;
+  }
+  console.log('coin id found')
+  var $coin = $(
+    "<span class='cc " + coin.id + ">"  + coin.text + "</span>"
+  );
+  console.log(coin)
+  return $coin;
+};
