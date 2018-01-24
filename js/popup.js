@@ -1,62 +1,7 @@
-document.addEventListener('DOMContentLoaded', do_chartMst);
-function do_chart () {
-  var coinArray = []
-  var coin
-  var tblHtml = '<table class="table is-striped is-hoverable is-size-6 is-fullwidth" id="coinwatch"><thead><th>Currency</th><th>Price</th><th nowrap>24HR Chg</th></thead><tbody>'
-  const PLUS = "class='has-text-success'>"
-  const MINUS = "class='has-text-danger'>"
-  // comment out chrome apis, url, and ending )} to test as web page -- 3lines
-  chrome.storage.sync.get('currencies', function(items) {
-    if (!chrome.runtime.error) {
-      const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + items.currencies + '&extraParams=CryptoWatch'
-  // const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=BTC,BTC,CLOAK,ETH,BTS,BCH,BURST'
-      axios.get(url).then(function(res){
-        for (coin in res.data.DISPLAY){
-          coinArray.push(res.data.DISPLAY[coin])
-        }
-        for( var i = 0; i< coinArray.length; i++ ){
-          var chg = Number(coinArray[i]['USD']['CHANGEPCT24HOUR'])
-          var cssCls = chg >= 0 ? PLUS : MINUS
-          tblHtml+="<tr>"
-          tblHtml+="<td>" + coinArray[i]['USD']['FROMSYMBOL']+"</td>"
-          tblHtml+="<td class='has-text-right' style='white-space: nowrap'>" + coinArray[i]['USD']['PRICE']+"</td>"
-          tblHtml+="<td " + cssCls + coinArray[i]['USD']['CHANGEPCT24HOUR'] +"%</td>"
-          tblHtml+="</tr>"
-        }
-        var tblClose = "</tbody id='tblClose'></table>"
-        $('#spinner').hide()
-        document.getElementById('charts').innerHTML += tblHtml
-      }).catch(function(err){
-        console.log(err)
-      });
-     }
-   })
-}
-
-function add_new(id) {
-  const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + id + '&extraParams=CryptoWatch'
-  axios.get(url).then(function(res){
-    for (coin in res.data.DISPLAY){
-      coinArray.unshift(res.data.DISPLAY[coin])
-    }
-    for( var i = 0; i< coinArray.length; i++ ){
-      var chg = Number(coinArray[i]['USD']['CHANGEPCT24HOUR'])
-      var symbol = coinArray[i]['USD']['FROMSYMBOL']
-      var cssClass = chg >= 0 ? PLUS : MINUS
-      tblHtml+="<tr " +"id='" + symbol + "' >"
-      tblHtml+="<td><i class='cc '" +symbol + ">" + symbol +"</i></td>"
-      tblHtml+="<td class='has-text-right' style='white-space: nowrap'>" + coinArray[i]['USD']['PRICE']+"</td>"
-      tblHtml+="<td " + cssCls + coinArray[i]['USD']['CHANGEPCT24HOUR'] +"%</td>"
-      tblHtml+="</tr>"
-    }
-    document.getElementById('coinwatch').innerHTML += tblHtml
-  }).catch(function(err){
-    console.log(err)
-  });
-}
-
+document.addEventListener('DOMContentLoaded', loadTable);
 
 $(document).ready(function() {
+
   restore_options()
 
   var coinselect = $('#coinselect')
@@ -203,6 +148,12 @@ $(document).ready(function() {
     $("#coinwatch").find(selections[i]['id']).each(function(){ IDs.push(this.id); });
 
   });
+
+  $('#coinwatch').click(function() {
+    console.log('row clicked')
+    console.log(this.id)
+  })
+
 });
 
 function formatCoin (coin) {
@@ -235,10 +186,6 @@ function loadTable (inCoinList) {
 
   // and load the table instead
   $('#target').html(rendered)
-}
-
-function do_chartMst() {
-  loadTable()
 }
 
 function removeCoin(coin) {
