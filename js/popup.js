@@ -225,13 +225,24 @@ function loadTable () {
 
   // testing object mstCoinList
   var rendered = Mustache.render(template, {mstCoinList: [
-    {"symbol": "BTC","price": "$10,000","cssClass": "has-text-success","changePct": "3.2"},
-    {"symbol": "ETH","price": "$1,000","cssClass": "has-text-success","changePct": "3.2"}
+    {"symbol": "BTC","price": "$10,209","cssClass": "has-text-success","changePct": "3.2"},
+    {"symbol": "ETH","price": "$1,037","cssClass": "has-text-success","changePct": "7.3"},
+    {"symbol": "BCH","price": "$2,195","cssClass": "has-text-danger","changePct": "1.2"},
+    {"symbol": "LTC","price": "$198","cssClass": "has-text-success","changePct": "0.67"},
+    {"symbol": "XRP","price": "$1.32","cssClass": "has-text-success","changePct": "6.38"}
   ]})
+
+  // turn off the spinner...
   $('#spinner').hide()
+
+  // and load the table instead
   $('#target').html(rendered)
 }
 
 function do_chartMst() {
   loadTable()
+}
+
+function removeCoin(coin) {
+  console.log('removeCoin called')
 }

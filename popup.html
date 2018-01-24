@@ -33,14 +33,15 @@
       <div class="box" style="margin-top:8px;">
         <table class="table is-striped is-hoverable is-size-6 is-fullwidth" id="coinwatch">
         <thead>
-        <th>Currency</th><th>Price</th><th nowrap>24HR Chg</th>
+        <th>Currency</th><th>Price</th><th nowrap>24HR Chg</th><th>&nbsp;</th>
         </thead>
         <tbody>
         {{#mstCoinList}}
         <tr id="{{symbol}}">
-          <td><i class="cc {{symbol}}"></i>{{symbol}}</td>
+          <td><i class="cc {{symbol}} is-size-4"></i> {{symbol}}</td>
           <td class="has-text-right" style="white-space: nowrap">{{price}}</td>
-          <td class={{cssClass}}>{{changePct}}%</td>
+          <td class="has-text-right {{cssClass}}">{{changePct}}%</td>
+          <td><a class="button is-small is-white" onclick="removeCoin('{{symbol}}')">x</a></td>
         </tr>
         {{/mstCoinList}}
         </tbody>
