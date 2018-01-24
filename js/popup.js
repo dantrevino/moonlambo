@@ -235,3 +235,23 @@ function fetchPrices(symbols) {
     console.log(err)
   });
 }
+
+function save_options() {
+  var currency = document.getElementById('id_currency_multi').value;
+  var fiat = document.getElementById('id_fiat_multi').value;
+  var curr_sel = []
+  curr_sel.push(currency)
+  curr_sel.push(document.getElementById('watch-list').textContent)
+  chrome.storage.sync.set({'currencies': curr_sel }, function() {
+    // Update status to let user know options were saved.
+    var status = document.getElementById('status');
+    var watch = document.getElementById('watch-list');
+    var fiatPref = document.getElementById('fiat-pref');
+    status.textContent = 'Options saved.';
+    watch.textContent = curr_sel.toString()
+    fiatPref.textContent = fiat
+    setTimeout(function() {
+       status.textContent = '';
+     }, 750);
+   });
+}
