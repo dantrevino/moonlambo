@@ -209,21 +209,22 @@ function fetchPrices(symbols) {
   }
 //  const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + items.currencies + '&extraParams=CryptoWatch'
 // const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=BTC,BTC,CLOAK,ETH,BTS,BCH,BURST'
-  const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + symbols + '&extraParams=CryptoWatch'
+  const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD,CAD,CNY,EUR,GBP,INR,JPY,KWN&fsyms=' + symbols
   const PLUS = "has-text-success"
   const MINUS = "has-text-danger"
   var coinArray = []
   axios.get(url).then(function(res){
-    for (coin in res.data.DISPLAY){
-      coinArray.push(res.data.DISPLAY[coin])
+    for (coin in res.data.RAW){
+      coinArray.push(res.data.RAW[coin])
     }
+    console.log(res)
     var renderArr = []
     for( var i = 0; i< coinArray.length; i++ ){
       // var chg = coinArray[i]['USD']['CHANGEPCT24HOUR']
       var cssCls = coinArray[i]['USD']['CHANGEPCT24HOUR'] >= 0 ? PLUS : MINUS
       var arrSymbol = coinArray[i]['USD']['FROMSYMBOL']
       var arrPrice = coinArray[i]['USD']['PRICE']
-      var arrChgPct = coinArray[i]['USD']['CHANGEPCT24HOUR']
+      var arrChgPct = (coinArray[i]['USD']['CHANGEPCT24HOUR']).toFixed(2)
       renderArr.push({"symbol":arrSymbol,"price":arrPrice,"cssClass": cssCls, "changePct": arrChgPct})
     }
     console.log('array coming out of fetchPrices')
