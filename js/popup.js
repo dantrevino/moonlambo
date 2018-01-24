@@ -158,7 +158,7 @@ $(document).ready(function() {
 
 function formatCoin (coin) {
   if (!coin.id) { return coin.text; }
-  var $coin = $('<span class="icon" style="box-sizing: inherit;"><i class="' + coin.element.value + '"> '  + coin.text + '</i></span>');  return $coin;
+  var $coin = $('<i class="' + coin.element.value + '"> '  + coin.text + '</i>');  return $coin;
 };
 
 function loadTable (inCoinList) {
