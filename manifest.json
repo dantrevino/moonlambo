@@ -1,7 +1,7 @@
 {
   "name": "MoonLambo",
   "description": "Keep Calm and HODL On",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "manifest_version" : 2,
   "browser_action": {
       "default_popup": "popup.html",
