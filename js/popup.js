@@ -117,36 +117,13 @@ $(document).ready(function() {
     });
 
   $(coinselect).change(function(e) {
-    // var selections = ( JSON.stringify$(coinselect).select2('data')) );
+    var IDs = [];
     var selections = $(coinselect).select2('data')
-    //console.log('Selected IDs: ' + ids);
     console.log(selections)
     var i = (selections.length) - 1
     console.log('Selected options: ' + selections[i]['id'] + ' - ' + selections[i]['text'] );
-    // only selected options are sent
-    // if dynamically populating table, need to validate full
-    // list each time
-    // do not remove if removed from selected. leave that option
-    // to remove from table directly
-    // therefore only add if there is a new coin added to the end
-    // of the list
-
-    // get coin (ids) from select2
-    // add new coin?
-        // if coin id already exists in table, then ignore
-        // else
-        // 1. query for price
-        // 2. add to table
-    // remove coin?
-        // remove coin from table
-          // query coin ids in table
-          // use convention to identify
-          // this should only happen if selection is open
-          // provide delete button in table
-
-    var IDs = [];
-    $("#coinwatch").find(selections[i]['id']).each(function(){ IDs.push(this.id); });
-
+    $("#coinwatch").find('id').each(function(){ IDs.push(this.id); });
+    console.log(IDs)
   });
 
   $('#coinwatch').click(function() {

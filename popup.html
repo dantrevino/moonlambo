@@ -14,8 +14,9 @@
 <body>
   <div class="container">
     <section class="hero is-small" style="background-color: #3e2442;margin-bottom:8px;">
-      <div class="title has-text-centered" style="margin-top:8px;color:white !important;">MoonLambo</div>
+      <div class="title has-text-centered" style="color:white !important;"><h2>MoonLambo</h2></div>
     </section>
+
     <section>
       <div class="control is-expanded">
         <select multiple="multiple" id="coinselect">
@@ -42,7 +43,7 @@
           <td><i class="cc {{symbol}} is-size-4"></i> {{symbol}}</td>
           <td class="has-text-right" style="white-space: nowrap">{{price}}</td>
           <td class="has-text-right {{cssClass}}">{{changePct}}%</td>
-          <td><a class="button is-small is-white" onclick="removeCoin('{{symbol}}')">x</a></td>
+          <td><a class="button button-small">x</a></td>
         </tr>
         {{/mstCoinList}}
         </tbody>
