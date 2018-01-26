@@ -117,12 +117,22 @@ $(document).ready(function() {
     });
 
   $(coinselect).change(function(e) {
-    var IDs = [];
+    var IDs = $('#watch-list').text()
+    console.log('this is what we have')
+    console.log(IDs)
+    console.log('now add this ... ')
+
+    var selectionSet = new Set(IDs.concat())
+
+
+
     var selections = $(coinselect).select2('data')
     console.log(selections)
     var i = (selections.length) - 1
     console.log('Selected options: ' + selections[i]['id'] + ' - ' + selections[i]['text'] );
-    $("#coinwatch").find('id').each(function(){ IDs.push(this.id); });
+    $("#coinwatch").find('id').each(function(){
+      IDs.push( $(this).id);
+    });
     console.log(IDs)
   });
 
@@ -147,6 +157,7 @@ function loadTable (inCoinList) {
   // build mstCoinList
   console.log('this is what were wriiting to coinlist')
   console.log(inCoinList)
+  $('#watch-list').textContent += inCoinList;
   var rendered = Mustache.render(template, {mstCoinList:inCoinList})
 
   // testing object mstCoinList
@@ -174,6 +185,7 @@ function removeCoin(coin) {
 function restore_options() {
   chrome.storage.sync.get('currencies', function(items) {
     if (!chrome.runtime.error) {
+      $('#watch-list').text(items.currencies)
       fetchPrices(items.currencies);
     }
   });
