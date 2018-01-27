@@ -5,7 +5,7 @@
   <script src="js/axios.min.js"></script>
   <script src="js/mustache.min.js"></script>
   <script src="js/popup.js"></script>
-  <link rel="stylesheet" href="css/milligram.min.css">
+  <link rel="stylesheet" href="css/saifu.css">
   <!-- <link rel="stylesheet" href="css/riotai-lite.css"> -->
   <link rel="stylesheet" href="css/select2.min.css">
   <link rel="stylesheet" href="css/cryptocoins.css">
@@ -14,7 +14,7 @@
 <body>
   <div class="container">
     <section class="hero" style="background-color: #3e2442;margin-bottom:8px;">
-      <div class="title" style="color:white !important;text-align: center;"><h2>MoonLambo</h2></div>
+      <div class="title is-small" style="color:white !important;text-align: center;"><h2>MoonLambo</h2></div>
     </section>
 
     <section>
@@ -43,7 +43,7 @@
           <td><h5><i class="cc {{symbol}}"></i> {{symbol}}</h5></td>
           <td class="has-text-right" style="white-space: nowrap"><h5>{{price}}</h5></td>
           <td class="has-text-right {{cssClass}}"><h5>{{changePct}}%</h5></td>
-          <td><a class="button button-small">x</a></td>
+          <td><a class="button is-rounded is-primary">x</a></td>
         </tr>
         {{/mstCoinList}}
         </tbody>
