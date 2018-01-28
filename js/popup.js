@@ -118,23 +118,27 @@ $(document).ready(function() {
 
   $(coinselect).change(function(e) {
     var IDs = $('#watch-list').text()
-    console.log('this is what we have')
-    console.log(IDs)
-    console.log('now add this ... ')
-
-    var selectionSet = new Set(IDs.concat())
-
-
-
     var selections = $(coinselect).select2('data')
+    var tmpCurrent = IDs.split(',')
+    console.log('==== change ===')
+    console.log('IDs: ' + IDs)
     console.log(selections)
-    var i = (selections.length) - 1
-    console.log('Selected options: ' + selections[i]['id'] + ' - ' + selections[i]['text'] );
-    $("#coinwatch").find('id').each(function(){
-      IDs.push( $(this).id);
-    });
+    console.log(tmpCurrent.toString())
+
+    selections.forEach(function(selection) {
+      console.log('selection id: ' + selection['id'])
+      if (!tmpCurrent.includes(selection['id'])) {
+        console.log('adding ' + selection['id'])
+        IDs += selection['id'] + ','
+      }
+    })
+    console.log('new IDs -->')
     console.log(IDs)
-  });
+    $('#watch-list').text(IDs)
+
+    save_options()
+  })
+
 
   $('#coinwatch').click(function() {
     console.log('row clicked')
@@ -149,7 +153,9 @@ function formatCoin (coin) {
 };
 
 function loadTable (inCoinList) {
-  if (inCoinList == null) {
+  if (inCoinList == null) {    var status = document.getElementById('status');
+    status.textContent = 'Options saved.';
+
     inCoinList = [{mstCoinList:{"symbol":"BTC","price":"$0","cssClass":"has-text-info","changePct":"0.0"}}]
   }
   var template = $('#charts').html()
@@ -159,15 +165,6 @@ function loadTable (inCoinList) {
   console.log(inCoinList)
   $('#watch-list').textContent += inCoinList;
   var rendered = Mustache.render(template, {mstCoinList:inCoinList})
-
-  // testing object mstCoinList
-  // var rendered = Mustache.render(template, {mstCoinList: [
-  //   {"symbol": "BTC","price": "$10,209","cssClass": "has-text-success","changePct": "3.2"},
-  //   {"symbol": "ETH","price": "$1,037","cssClass": "has-text-success","changePct": "7.3"},
-  //   {"symbol": "BCH","price": "$2,195","cssClass": "has-text-danger","changePct": "1.2"},
-  //   {"symbol": "LTC","price": "$198","cssClass": "has-text-success","changePct": "0.67"},
-  //   {"symbol": "XRP","price": "$1.32","cssClass": "has-text-success","changePct": "6.38"}
-  // ]})
 
   // turn off the spinner...
   $('#spinner').hide()
@@ -199,6 +196,7 @@ function fetchPrices(symbols) {
 //  const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + items.currencies + '&extraParams=CryptoWatch'
 // const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=BTC,BTC,CLOAK,ETH,BTS,BCH,BURST'
   const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD,CAD,CNY,EUR,GBP,INR,JPY,KWN&fsyms=' + symbols
+  console.log('fetch url: ' + url)
   const PLUS = "has-text-success"
   const MINUS = "has-text-danger"
   var coinArray = []
@@ -226,21 +224,9 @@ function fetchPrices(symbols) {
 }
 
 function save_options() {
-  var currency = document.getElementById('id_currency_multi').value;
-  var fiat = document.getElementById('id_fiat_multi').value;
-  var curr_sel = []
-  curr_sel.push(currency)
-  curr_sel.push(document.getElementById('watch-list').textContent)
+  var currencies = $('#watch-list').text()
+  var curr_sel = [currencies]
   chrome.storage.sync.set({'currencies': curr_sel }, function() {
-    // Update status to let user know options were saved.
-    var status = document.getElementById('status');
-    var watch = document.getElementById('watch-list');
-    var fiatPref = document.getElementById('fiat-pref');
-    status.textContent = 'Options saved.';
-    watch.textContent = curr_sel.toString()
-    fiatPref.textContent = fiat
-    setTimeout(function() {
-       status.textContent = '';
-     }, 750);
-   });
+    fetchPrices(curr_sel)
+  });
 }

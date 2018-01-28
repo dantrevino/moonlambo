@@ -31,7 +31,7 @@ function restore_options() {
 }
 
 function clear_options() {
-  chrome.storage.local.clear(function () {
+  chrome.storage.sync.clear(function () {
     var watch = document.getElementById('watch-list').textContent='';
     var status = document.getElementById('status');
     status.textContent = 'Options saved.';
