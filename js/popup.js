@@ -120,22 +120,12 @@ $(document).ready(function() {
     var IDs = $('#watch-list').text()
     var selections = $(coinselect).select2('data')
     var tmpCurrent = IDs.split(',')
-    console.log('==== change ===')
-    console.log('IDs: ' + IDs)
-    console.log(selections)
-    console.log(tmpCurrent.toString())
-
     selections.forEach(function(selection) {
-      console.log('selection id: ' + selection['id'])
       if (!tmpCurrent.includes(selection['id'])) {
-        console.log('adding ' + selection['id'])
         IDs += selection['id'] + ','
       }
     })
-    console.log('new IDs -->')
-    console.log(IDs)
     $('#watch-list').text(IDs)
-
     save_options()
   })
 
@@ -155,20 +145,16 @@ function formatCoin (coin) {
 function loadTable (inCoinList) {
   if (inCoinList == null) {    var status = document.getElementById('status');
     status.textContent = 'Options saved.';
-
     inCoinList = [{mstCoinList:{"symbol":"BTC","price":"$0","cssClass":"has-text-info","changePct":"0.0"}}]
   }
   var template = $('#charts').html()
   Mustache.parse(template)
   // build mstCoinList
-  console.log('this is what were wriiting to coinlist')
-  console.log(inCoinList)
   $('#watch-list').textContent += inCoinList;
   var rendered = Mustache.render(template, {mstCoinList:inCoinList})
 
   // turn off the spinner...
   $('#spinner').hide()
-
   // and load the table instead
   $('#target').html(rendered)
 }
@@ -188,15 +174,11 @@ function restore_options() {
   });
 }
 
-// takes in as tring or array of string
 function fetchPrices(symbols) {
   if ( symbols == null ) {
     symbols='ADA,EOS'
   }
-//  const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=' + items.currencies + '&extraParams=CryptoWatch'
-// const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD&fsyms=BTC,BTC,CLOAK,ETH,BTS,BCH,BURST'
   const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD,CAD,CNY,EUR,GBP,INR,JPY,KWN&fsyms=' + symbols
-  console.log('fetch url: ' + url)
   const PLUS = "has-text-success"
   const MINUS = "has-text-danger"
   var coinArray = []
@@ -204,19 +186,15 @@ function fetchPrices(symbols) {
     for (coin in res.data.RAW){
       coinArray.push(res.data.RAW[coin])
     }
-    console.log(res)
     var renderArr = []
     for( var i = 0; i< coinArray.length; i++ ){
       // var chg = coinArray[i]['USD']['CHANGEPCT24HOUR']
       var cssCls = coinArray[i]['USD']['CHANGEPCT24HOUR'] >= 0 ? PLUS : MINUS
       var arrSymbol = coinArray[i]['USD']['FROMSYMBOL']
-      var arrPrice = coinArray[i]['USD']['PRICE']
-      var arrChgPct = (coinArray[i]['USD']['CHANGEPCT24HOUR']).toFixed(2)
+      var arrPrice = Number.parseFloat(coinArray[i]['USD']['PRICE']).toFixed(2)
+      var arrChgPct = Number.parseFloat(coinArray[i]['USD']['CHANGEPCT24HOUR']).toFixed(2)
       renderArr.push({"symbol":arrSymbol,"price":arrPrice,"cssClass": cssCls, "changePct": arrChgPct})
     }
-    console.log('array coming out of fetchPrices')
-    console.log(renderArr)
-    console.log('---')
     loadTable(renderArr)
   }).catch(function(err){
     console.log(err)

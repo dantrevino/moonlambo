@@ -7,53 +7,53 @@
   <script src="js/popup.js"></script>
   <link rel="stylesheet" href="css/fontawesome-all.min.css">
   <link rel="stylesheet" href="css/spinner.css">
-  <link rel="stylesheet" href="css/riotai.css">
+  <link rel="stylesheet" href="css/bulma.css">
   <link rel="stylesheet" href="css/select2.min.css">
   <link rel="stylesheet" href="css/cryptocoins.css">
   <link rel="stylesheet" href="css/cryptocoins-colors.css">
 </head>
 <body>
-  <div class="container">
-    <section class="hero" style="background-color: #3e2442;margin-bottom:8px;">
+  <section class="hero" style="background-color: #3e2442;margin-bottom:8px;">
+    <div class="container is-fluid">
       <div class="title is-small" style="color:white !important;text-align: center;"><h2>MoonLambo</h2></div>
-    </section>
-    <section>
+    </div>
+  </section>
+    <div class="container is-fluid box">
       <div class="control is-expanded">
         <select multiple="multiple" id="coinselect">
         </select>
       </div>
-    </section>
-    <section>
+    </div>
+    <div class="container is-fluid">
       <div class="spinner" id="spinner">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
         <div class="bounce3"></div>
       </div>
       <div id="target"></div>
-    </section>
       <script id="charts" type="x-tmpl-mustache">
       <div class="box">
-        <table class="table" id="coinwatch">
-        <thead>
-        <th>Currency</th><th>Price</th><th nowrap>24HR Chg</th><th>&nbsp;</th>
-        </thead>
-        <tbody>
-        {{#mstCoinList}}
-        <tr id="{{symbol}}">
-          <td><h5><i class="cc {{symbol}}"></i> {{symbol}}</h5></td>
-          <td class="has-text-right" style="white-space: nowrap"><h5>{{price}}</h5></td>
-          <td class="has-text-right {{cssClass}}"><h5>{{changePct}}%</h5></td>
-          <td><div class="button is-white is-small" style="height: auto;padding-top:0px; padding-bottom:0px;"><span class="icon"><i class="fas fa-minus-circle" style="color:#3e2442;"></i></span></div></td>
-        </tr>
-        {{/mstCoinList}}
-        </tbody>
-        </table>
-        </div>
+      <table class="table is-striped" id="coinwatch">
+      <thead>
+      <th>Currency</th><th>Price</th><th nowrap>24HR Chg</th><th>&nbsp;</th>
+      </thead>
+      <tbody>
+      {{#mstCoinList}}
+      <tr id="{{symbol}}">
+      <td><h5><i class="cc {{symbol}}"></i> {{symbol}}</h5></td>
+      <td class="has-text-right" style="white-space: nowrap"><h5>${{price}}</h5></td>
+      <td class="has-text-right {{cssClass}}"><h5>{{changePct}}%</h5></td>
+      <td><div class="button is-white is-outlined is-small" style="height: auto;padding-top:0px; padding-bottom:0px;"><span class="icon" title='Use the "Clear" button on the Options page, for now '><i class="fas fa-minus-circle" style="color:#3e2442;"></i></span></div></td>
+      </tr>
+      {{/mstCoinList}}
+      </tbody>
+      </table>
+      </div>
       </script>
-  </div>
-  <div class="is-size-7">
-    <a href="https://riot.ai/">riot.ai</a>
-  </div>
-  <div id="watch-list" style="display:none;"></div>
+      <div class="is-size-7">
+        <a href="https://riot.ai/">riot.ai</a>
+      </div>
+      <div id="watch-list" style="display:none;"></div>
+    </div>
 </body>
 </html>

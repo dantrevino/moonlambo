@@ -1,5 +1,6 @@
 {
   "name": "MoonLambo",
+  "short_name": "MoonLambo",
   "description": "Keep Calm and HODL On",
   "version": "0.2.0",
   "manifest_version" : 2,
