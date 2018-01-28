@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', loadTable);
+// document.addEventListener('DOMContentLoaded', loadTable);
 
 $(document).ready(function() {
 
@@ -130,10 +130,7 @@ $(document).ready(function() {
   })
 
 
-  $('#coinwatch').click(function() {
-    console.log('row clicked')
-    console.log(this.id)
-  })
+
 
 });
 
@@ -157,6 +154,28 @@ function loadTable (inCoinList) {
   $('#spinner').hide()
   // and load the table instead
   $('#target').html(rendered)
+
+  // add remove functionality after table is rendered
+  $("td[id^='rm-r_']").click(function(el) {
+    var coin = $(this)[0].parentElement.id
+    console.log(coin)
+    // remove coin from list
+    var coins = $('#watch-list').text()
+    console.log('original list: ' + coins)
+    coins = coins.replace(coin,'')
+    console.log('removed coin ' + coin + ', now have: ' + coins)
+    coins = coins.replace(',,',',')
+    console.log('fixed an extra commas in the middle of the string: ' + coins)
+    // informational only below
+    // leaving in the trailing comma because our
+    // add function acts as if it is there
+    // coins = coins.replace(/,$/,'')
+    // console.log('remove comma from eol: ' + coins)
+    coins = coins.replace(/^,/,'')
+    console.log('remove comma from beg of line: ' + coins)
+    $('#watch-list').text(coins)
+    save_options()
+  })
 }
 
 function removeCoin(coin) {

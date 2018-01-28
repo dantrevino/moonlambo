@@ -4,7 +4,7 @@
   <script src="js/select2.full.min.js"></script>
   <script src="js/axios.min.js"></script>
   <script src="js/mustache.min.js"></script>
-  <script src="js/default.js"></script>
+  <script src="js/popup.js"></script>
   <link rel="stylesheet" href="css/fontawesome-all.min.css">
   <link rel="stylesheet" href="css/spinner.css">
   <link rel="stylesheet" href="css/bulma.css">
@@ -33,7 +33,7 @@
       <div id="target"></div>
       <script id="charts" type="x-tmpl-mustache">
       <div class="box">
-      <table class="table is-striped" id="coinwatch">
+      <table class="table is-striped" id="tblCoinWatch" >
       <thead>
       <th>Currency</th><th>Price</th><th nowrap>24HR Chg</th><th>&nbsp;</th>
       </thead>
@@ -43,7 +43,7 @@
       <td><h5><i class="cc {{symbol}}"></i> {{symbol}}</h5></td>
       <td class="has-text-right" style="white-space: nowrap"><h5>${{price}}</h5></td>
       <td class="has-text-right {{cssClass}}"><h5>{{changePct}}%</h5></td>
-      <td><div class="button is-white is-outlined is-small" style="height: auto;padding-top:0px; padding-bottom:0px;"><span class="icon" title='Use the "Clear" button on the Options page, for now '><i class="fas fa-minus-circle" style="color:#3e2442;"></i></span></div></td>
+      <td id="rm-r_{{symbol}}"><div class="button is-white is-outlined is-small" style="height: auto;padding-top:0px; padding-bottom:0px;"><span class="icon"><i class="fas fa-minus-circle" style="color:#3e2442;"></i></span></div></td>
       </tr>
       {{/mstCoinList}}
       </tbody>
