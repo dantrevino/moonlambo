@@ -158,6 +158,9 @@ function loadCurrencyList () {
   Mustache.parse(template)
   var rendered = Mustache.render(template, data)
   $('#currencyTarget').html(rendered)
+  $('.dropdown').click(function() {
+    $(this).toggleClass('is-active')
+  })
   $('#dropdown-fiat').click(function(item) {
     console.log(item)
     $('#watch-fiat').text(item.target.id + ',' + item.target.lang)
