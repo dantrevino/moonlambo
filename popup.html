@@ -18,42 +18,63 @@
       <div class="title is-small" style="color:white !important;text-align: center;"><h2>MoonLambo</h2></div>
     </div>
   </section>
-    <div class="container is-fluid box">
+    <div class="container is-fluid" style='padding:5px;'>
       <div class="control is-expanded">
-        <select multiple="multiple" id="coinselect">
-        </select>
+        <select multiple="multiple" id="coinselect"></select>
       </div>
     </div>
-    <div class="container is-fluid">
+    <div class="container is-fluid" style='padding:5px;'>
       <div class="spinner" id="spinner">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
         <div class="bounce3"></div>
       </div>
       <div id="target"></div>
+    </div>
+    <div>
+      <div class="has-text-right is-size-7" id="currencyTarget">
+      </div>
+    </div>
+    <div id="watch-list" style="display:none;"></div>
+    <div id="watch-fiat" style="display:none;"></div>
       <script id="charts" type="x-tmpl-mustache">
       <div class="box">
-      <table class="table is-striped" id="tblCoinWatch" >
-      <thead>
-      <th>Currency</th><th>Price</th><th nowrap>24HR Chg</th><th>&nbsp;</th>
-      </thead>
-      <tbody>
-      {{#mstCoinList}}
-      <tr id="{{symbol}}">
-      <td><h5><i class="cc {{symbol}}"></i> {{symbol}}</h5></td>
-      <td class="has-text-right" style="white-space: nowrap"><h5>${{price}}</h5></td>
-      <td class="has-text-right {{cssClass}}"><h5>{{changePct}}%</h5></td>
-      <td id="rm-r_{{symbol}}"><div class="button is-white is-outlined is-small" style="height: auto;padding-top:0px; padding-bottom:0px;"><span class="icon"><i class="fas fa-minus-circle" style="color:#3e2442;"></i></span></div></td>
-      </tr>
-      {{/mstCoinList}}
-      </tbody>
-      </table>
+        <table class="table is-striped" id="tblCoinWatch" >
+          <thead>
+            <th>Currency</th><th>Price</th><th nowrap>24HR Chg</th><th>&nbsp;</th>
+          </thead>
+          <tbody>
+            {{#mstCoinList}}
+            <tr id="{{symbol}}">
+              <td><h5><i class="cc {{symbol}}"></i> {{symbol}}</h5></td>
+              <td class="has-text-right" style="white-space: nowrap"><h5>{{price}}</h5></td>
+              <td class="has-text-right {{cssClass}}"><h5>{{changePct}}%</h5></td>
+              <td id="rm-r_{{symbol}}"><div class="button is-white is-outlined is-small" style="height: auto;padding-top:0px; padding-bottom:0px;"><span class="icon"><i class="fas fa-minus-circle" style="color:#3e2442;"></i></span></div></td>
+            </tr>
+            {{/mstCoinList}}
+            </tbody>
+        </table>
       </div>
       </script>
-      <div class="is-size-7">
-        <a href="https://riot.ai/">riot.ai</a>
-      </div>
-      <div id="watch-list" style="display:none;"></div>
+      <script id="currencySelect" type="x-tmpl-mustache">
+        <div class="dropdown is-up is-right is-hoverable">
+          <div class="dropdown-trigger">
+            <button class="button is-white is-outline is-small" aria-haspopup="true" aria-controls="dropdown-menu7">
+              <div class="is-size-7">{{xcode}}</div>
+              <span class="icon is-small">
+                <i class="fas fa-angle-up is-size-7" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-fiat" role="menu" style="min-width:4rem;">
+            <div class="dropdown-content">
+              {{#currency}}
+              <div class="dropdown-item" style="padding: 0 5px 0 0;"><span id="{{currency}}" lang="{{lang}}">{{currency}}</span></div>
+              {{/currency}}
+            </div>
+          </div>
+        </div>
+      </script>
     </div>
 </body>
 </html>

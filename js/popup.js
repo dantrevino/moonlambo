@@ -1,5 +1,3 @@
-// document.addEventListener('DOMContentLoaded', loadTable);
-
 $(document).ready(function() {
 
   restore_options()
@@ -129,18 +127,49 @@ $(document).ready(function() {
     save_options()
   })
 
-
-
-
-});
+  loadCurrencyList()
+}); // end document ready
 
 function formatCoin (coin) {
-  if (!coin.id) { return coin.text; }
-  var $coin = $('<i class="' + coin.element.value + '"> '  + coin.text + '</i>');  return $coin;
-};
+  if (!coin.id) {
+    return coin.text;
+  }
+  var $coin = $('<i class="' + coin.element.value + '"> '  + coin.text + '</i>');
+  return $coin;
+}
+
+function loadCurrencyList () {
+  var data = {
+    currency:  [
+      // {"currency":"BTC","lang":"BTC","xcode":"B"},
+      {"currency":"AUD","lang":"en-AU","xcode":"$"},
+      {"currency":"CAD","lang":"en-CA","xcode":"$"},
+      {"currency":"CNY","lang":"zh-CN","xcode":"¥"},
+      {"currency":"EUR","lang":"de-DE","xcode":"€"},
+      {"currency":"GBP","lang":"en-GB","xcode":"₤"},
+      {"currency":"INR","lang":"en-IN","xcode":"₹"},
+      {"currency":"ISL","lang":"he","xcode":"₪"},
+      {"currency":"JPY","lang":"ja","xcode":"¥"},
+      {"currency":"KRW","lang":"ko","xcode":"₩"},
+      {"currency":"USD","lang":"en-US","xcode":"$"}]
+  }
+
+  var template = $('#currencySelect').html()
+  Mustache.parse(template)
+  var rendered = Mustache.render(template, data)
+  $('#currencyTarget').html(rendered)
+  $('#dropdown-fiat').click(function(item) {
+    console.log(item)
+    $('#watch-fiat').text(item.target.id + ',' + item.target.lang)
+  save_options()
+  })
+}
+
+
 
 function loadTable (inCoinList) {
-  if (inCoinList == null) {    var status = document.getElementById('status');
+  if (inCoinList == null) {
+    var status = document.getElementById('status');
     status.textContent = 'Options saved.';
     inCoinList = [{mstCoinList:{"symbol":"BTC","price":"$0","cssClass":"has-text-info","changePct":"0.0"}}]
   }
@@ -158,46 +187,58 @@ function loadTable (inCoinList) {
   // add remove functionality after table is rendered
   $("td[id^='rm-r_']").click(function(el) {
     var coin = $(this)[0].parentElement.id
-    console.log(coin)
+    // console.log(coin)
     // remove coin from list
     var coins = $('#watch-list').text()
-    console.log('original list: ' + coins)
+    // console.log('original list: ' + coins)
     coins = coins.replace(coin,'')
-    console.log('removed coin ' + coin + ', now have: ' + coins)
+    // console.log('removed coin ' + coin + ', now have: ' + coins)
     coins = coins.replace(',,',',')
-    console.log('fixed an extra commas in the middle of the string: ' + coins)
+    // console.log('fixed an extra commas in the middle of the string: ' + coins)
     // informational only below
     // leaving in the trailing comma because our
     // add function acts as if it is there
     // coins = coins.replace(/,$/,'')
     // console.log('remove comma from eol: ' + coins)
     coins = coins.replace(/^,/,'')
-    console.log('remove comma from beg of line: ' + coins)
+    // console.log('remove comma from beg of line: ' + coins)
     $('#watch-list').text(coins)
     save_options()
   })
 }
 
-function removeCoin(coin) {
-  console.log('removeCoin called')
-}
-
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
+// function restore_options() {
+//   chrome.storage.sync.get('currencies', function(items) {
+//     if (!chrome.runtime.error) {
+//       $('#watch-list').text(items.currencies)
+//       fetchPrices(items.currencies);
+//     }
+//   });
+// }
+
 function restore_options() {
-  chrome.storage.sync.get('currencies', function(items) {
+  chrome.storage.sync.get(function(items) {
     if (!chrome.runtime.error) {
-      $('#watch-list').text(items.currencies)
-      fetchPrices(items.currencies);
+      var coins = items.currencies
+      var fiat = items.fiat
+      if ( coins == '') {
+        coins = 'BTC'
+      }
+      if ( fiat == ''){
+        fiat = 'USD'
+      }
+      $('#watch-list').text(coins)
+      $('#watch-fiat').text(fiat)
+      fetchPrices(coins, fiat);
     }
   });
 }
 
-function fetchPrices(symbols) {
-  if ( symbols == null ) {
-    symbols='ADA,EOS'
-  }
-  const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=USD,CAD,CNY,EUR,GBP,INR,JPY,KWN&fsyms=' + symbols
+function fetchPrices(symbols, fiat, lang) {
+  const url = 'https://min-api.cryptocompare.com/data/pricemultifull?tsyms=' + fiat + '&fsyms=' + symbols
+  console.log(url)
   const PLUS = "has-text-success"
   const MINUS = "has-text-danger"
   var coinArray = []
@@ -208,10 +249,10 @@ function fetchPrices(symbols) {
     var renderArr = []
     for( var i = 0; i< coinArray.length; i++ ){
       // var chg = coinArray[i]['USD']['CHANGEPCT24HOUR']
-      var cssCls = coinArray[i]['USD']['CHANGEPCT24HOUR'] >= 0 ? PLUS : MINUS
-      var arrSymbol = coinArray[i]['USD']['FROMSYMBOL']
-      var arrPrice = Number.parseFloat(coinArray[i]['USD']['PRICE']).toFixed(2)
-      var arrChgPct = Number.parseFloat(coinArray[i]['USD']['CHANGEPCT24HOUR']).toFixed(2)
+      var cssCls = coinArray[i][fiat]['CHANGEPCT24HOUR'] >= 0 ? PLUS : MINUS
+      var arrSymbol = coinArray[i][fiat]['FROMSYMBOL']
+      var arrPrice = Number.parseFloat(coinArray[i][fiat]['PRICE']).toLocaleString(lang,{style: 'currency', currency: fiat})
+      var arrChgPct = Number.parseFloat(coinArray[i][fiat]['CHANGEPCT24HOUR']).toFixed(2)
       renderArr.push({"symbol":arrSymbol,"price":arrPrice,"cssClass": cssCls, "changePct": arrChgPct})
     }
     loadTable(renderArr)
@@ -222,8 +263,19 @@ function fetchPrices(symbols) {
 
 function save_options() {
   var currencies = $('#watch-list').text()
+  var fiat = $('#watch-fiat').text()
+  var idx = fiat.indexOf(",")
+  var currency = fiat.substr(0,idx)
+  var lang = fiat.substr(idx+1)
+  console.log(currencies)
   var curr_sel = [currencies]
-  chrome.storage.sync.set({'currencies': curr_sel }, function() {
-    fetchPrices(curr_sel)
+  console.log(curr_sel)
+  var data = {
+    'currencies': curr_sel,
+    'fiat': currency,
+    'lang': lang
+  }
+  chrome.storage.sync.set(data, function() {
+    fetchPrices(curr_sel, currency,lang)
   });
 }

@@ -29,9 +29,6 @@
       "description": "Opens default view"
     }
   },
-  "options_ui": {
-    "page": "options.html"
-  },
   "permissions": [
     "storage"
   ]
