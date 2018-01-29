@@ -1,3 +1,5 @@
+const FILE_FORMAT = 'v2'
+
 $(document).ready(function() {
 
   restore_options()
@@ -223,17 +225,34 @@ function loadTable (inCoinList) {
 
 function restore_options() {
   chrome.storage.sync.get(function(items) {
+    console.log(items)
     if (!chrome.runtime.error) {
       var coins = items.currencies
       var fiat = items.fiat
-      if ( coins == '') {
+      var lang = items.lang
+      var format = items.file_format
+      if ( coins === undefined ) {
         coins = 'BTC'
       }
-      if ( fiat == ''){
+      if ( fiat === undefined){
         fiat = 'USD'
       }
+      if (lang === undefined) {
+          lang = 'en-US'
+      }
+      if (format === undefined){
+        tmpData = {
+          currencies: coins,
+          fiat: fiat,
+          lang: 'en-US',
+          format: FILE_FORMAT
+        }
+        chrome.storage.sync.set(tmpData, function () {
+          console.log('storage upgraded')
+        })
+      }
       $('#watch-list').text(coins)
-      $('#watch-fiat').text(fiat)
+      $('#watch-fiat').text(fiat +',' + lang)
       fetchPrices(coins, fiat);
     }
   });
@@ -274,6 +293,7 @@ function save_options() {
   var curr_sel = [currencies]
   console.log(curr_sel)
   var data = {
+    'file_format': FILE_FORMAT,
     'currencies': curr_sel,
     'fiat': currency,
     'lang': lang
