@@ -232,7 +232,7 @@ function restore_options() {
       var lang = items.lang
       var format = items.file_format
       if ( coins === undefined ) {
-        coins = 'BTC'
+        coins = 'BTC,'
       }
       if ( fiat === undefined){
         fiat = 'USD'
