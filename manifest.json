@@ -31,5 +31,10 @@
   },
   "permissions": [
     "storage"
-  ]
+  ],
+  "applications": {
+    "gecko": {
+      "id":"moonlambo@riot.ai"
+    }
+  }
 }
