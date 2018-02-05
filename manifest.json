@@ -6,7 +6,8 @@
   "manifest_version" : 2,
   "browser_action": {
       "default_popup": "popup.html",
-      "default_icon" : "images/ceye-128x128.png"
+      "default_icon" : "images/ceye-128x128.png",
+      "default_name" : "MoonLambo"
   },
   "icons": {
       "32": "images/icons/icon-32x32.png",
@@ -32,6 +33,10 @@
   "permissions": [
     "storage"
   ],
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
   "applications": {
     "gecko": {
       "id":"moonlambo@riot.ai"

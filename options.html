@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body: { padding: 10px; }
+    .media {
+      display: flex;
+      align-items: flex-start;
+    }
+    .media-img {
+      margin-right: 1em;
+      padding: 8px;
+    }
+    .media-body {
+      flex: 1;
+    }
+    img { border-radius: 50%;}
+  </style>
+</head>
+<body>
+    <div class="media">
+      <div class="media-img">
+        <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image" id="avatar-image">
+      </div>
+      <div class="media-body">
+        <p id="profile-name">User Name</p>
+        <p>@username</p>
+      </div>
+    </div>
+    <p>
+      <button class="button is primary" id="sign-in">Login with Blockstack</button>
+      <button class="button is-danger" id="sign-out" style="float:right;">Disconnect</button>
+    </p>
+    </div>
+    <script src="js/blockstack.js"></script>
+    <script src="js/options.js"></script>
+</body>
+</html>
