@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) {
   document.getElementById('sign-in').addEventListener('click', function() {
-    var scopes = ['storage']
+    var scopes = ['store_write']
     console.log(chrome.runtime.getURL('popup.html'))
     console.log(chrome.runtime.getURL('manifest.json'))
     blockstack.redirectToSignIn(chrome.runtime.getURL('popup.html'), chrome.runtime.getURL('manifest.json'), scopes)
