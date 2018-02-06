@@ -33,10 +33,6 @@
   "permissions": [
     "storage"
   ],
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
-  },
   "applications": {
     "gecko": {
       "id":"moonlambo@riot.ai"
