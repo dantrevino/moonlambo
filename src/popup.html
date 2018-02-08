@@ -7,8 +7,9 @@
   <script src="js/mustache.min.js"></script>
   <script src="js/popup.js"></script>
   <link rel="stylesheet" href="css/fontawesome-all.min.css">
+  <!-- Spinner css holds spinner data and bulma customizations -->
   <link rel="stylesheet" href="css/spinner.css">
-  <link rel="stylesheet" href="css/bulma.css">
+  <link rel="stylesheet" href="css/bulma.min.css">
   <link rel="stylesheet" href="css/select2.min.css">
   <link rel="stylesheet" href="css/cryptocoins.css">
   <link rel="stylesheet" href="css/cryptocoins-colors.css">
@@ -71,7 +72,9 @@
           <div class="dropdown-menu" id="dropdown-fiat" role="menu" style="min-width:4rem;">
             <div class="dropdown-content">
               {{#currency}}
-              <div class="dropdown-item" style="padding: 0 5px 0 0;"><span id="{{currency}}" lang="{{lang}}">{{currency}}</span></div>
+              <div class="dropdown-item" style="padding: 0 5px 0 0;">
+                <a href="#" id="{{currency}}" lang="{{lang}}">{{currency}}</a>
+              </div>
               {{/currency}}
             </div>
           </div>
