@@ -182,6 +182,7 @@ $(document).ready(function() {
         {id: 'DASH', text:'Dash'},
         {id: 'DCT', text:'DECENT'},
         {id: 'DCR', text:'Decred'},
+        {id: 'DBC', text:'DeepBrain'},
         {id: 'ONION', text:'DeepOnion'},
         {id: 'DNR', text:'Denarius'},
         {id: 'DMD', text:'Diamond'},
