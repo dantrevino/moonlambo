@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/cryptocoins-colors.css">
 </head>
 <body>
-  <section class="hero" style="background-color: #3e2442;margin-bottom:8px;">
+  <div class="hero" style="background-color: #3e2442;margin-bottom:8px;">
     <div class="media">
       <div class="media-left" style="padding-left: 8px;">
         <figure class="image">
@@ -23,17 +23,14 @@
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-3" style="color:white;">MoonLambo</p>
+        <div class="is-size-3" style="color:white;">MoonLambo</div>
       </div>
     </div>
-  </section>
-  <div id="messages"></div>
-    <div class="container is-fluid" style='padding:5px;'>
-      <div class="control is-expanded">
-        <select multiple="multiple" id="coinselect"></select>
-      </div>
-    </div>
-    <div class="container is-fluid" style='padding:5px;'>
+  </div>
+  <div class="hero is-small" style="padding:5px;">
+    <select multiple="multiple" id="coinselect"></select>
+  </div>
+    <div style='padding:5px;'>
       <div class="spinner" id="spinner">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
@@ -49,18 +46,18 @@
     <div id="watch-fiat" style="display:none;"></div>
       <script id="charts" type="x-tmpl-mustache">
       <div class="box">
-        <table class="table is-striped" id="tblCoinWatch" >
+        <table class="table is-striped is-fullwidth" id="tblCoinWatch" >
           <thead>
             <th colspan="2">Currency</th><th>Price</th><th nowrap>24HR Chg</th><th>&nbsp;</th>
           </thead>
           <tbody>
             {{#mstCoinList}}
             <tr id="{{symbol}}">
-              <td><h5><i class="cc {{symbol}}"></i><h5></td>
-              <td><h5>{{symbol}}</h5></td>
+              <td style="padding-right:0;"><i class="cc {{symbol}}"></i>&nbsp;</td>
+              <td style="padding-left:0;">{{name}}</td>
               <td class="has-text-right" style="white-space: nowrap"><h5>{{price}}</h5></td>
               <td class="has-text-right {{cssClass}}"><h5>{{changePct}}%</h5></td>
-              <td id="rm-r_{{symbol}}"><div class="button is-white is-outlined is-small" style="height: auto;padding-top:0px; padding-bottom:0px;"><span class="icon"><i class="fas fa-minus-circle" style="color:#3e2442;"></i></span></div></td>
+              <td id="rm-r_{{symbol}}"><div class="button is-white is-outlined is-small" style="height: auto;padding-top:0px; padding-bottom:0px;"><span class="icon"><i class="fas fa-trash-alt" style="color:#3e2442;"></i></span></div></td>
             </tr>
             {{/mstCoinList}}
             </tbody>
@@ -72,6 +69,7 @@
           <div class="dropdown-trigger">
             <button class="button is-white is-outline is-small" aria-haspopup="true" aria-controls="dropdown-menu7">
               <div class="is-size-7">{{xcode}}</div>
+              Fiat Conversion:&nbsp;
               <span class="icon is-small">
                 <i class="fas fa-angle-up is-size-7" aria-hidden="true"></i>
               </span>
